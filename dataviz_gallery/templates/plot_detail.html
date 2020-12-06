@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block page_content %}
+
+{% include "nav.html" %}
+
+<h1>{{ plot_type.name }}</h1>
+<div class="card mb-2">
+    <div class="card-body text-center">
+        <img class="img-fluid" src="{% static plot_type.image %}" width="50">
+        <h6 class="card-title">{{ plot_type.name }}</h5>
+    </div>
+</div>
+{% endblock %}

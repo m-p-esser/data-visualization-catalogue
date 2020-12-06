@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block page_content %}
+
+{% include "nav.html" %}
+
+{% include "filter_menu.html" %}
+
+<div class="row">
+    {% for plot in plot_types %}
+    <div class="col-sm-3">
+        <!-- <div class="card group"> -->
+        <div class="card mb-2">
+            <div class="card-body text-center">
+                <a href="{% url 'plot_detail' plot.pk %}">
+                    <img class="img-fluid" src="{% static plot.image %}" width="50">
+                </a>
+                <h6 class="card-title">{{ plot.name }}</h5>
+                    <!-- <a href="{% url 'plot_detail' plot.pk %}" class="btn btn-primary">Read More</a> -->
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
