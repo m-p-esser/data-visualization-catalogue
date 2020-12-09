@@ -9,7 +9,7 @@ from dataviz_gallery import models
 
 
 def csv_to_df(file_name: str):
-    data_dir = pathlib.Path.cwd() / 'data'
+    data_dir = pathlib.Path.cwd() / 'data' / 'plot_taxanomy'
     file_path = data_dir / file_name
     df = pd.read_csv(file_path, delimiter=';')
     return df
