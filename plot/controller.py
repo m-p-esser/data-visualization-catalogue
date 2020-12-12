@@ -21,64 +21,93 @@ plot_func_mapping = {
 }
 
 vars_selection = {
-    "cat_vars": ["body-style", "make", "drive-wheels", "fuel-type"],
-    "num_vars": ["length", "width", "height"],
+    "cat_vars": ["race", "gender", "relationship", "income"],
+    "num_vars": ["age", "hours-per-week", "capital-gain", "capital-loss"],
     "time_vars": [],
 }
 
+cues = ["x", "y", "hue", "size", "row", "col"]
+
+# Settings
+plotting.seaborn_settings()
+
 # Load data into memory
-example_df = plotting.load_data("4_automobile.csv", "example_datasets", sep=",")
+example_df = plotting.load_data("6_adult.csv", sep=",")
 example_df = plotting.filter_data(example_df, vars_selection)
-plot_taxanomy = plotting.load_data("plot_taxanomy.csv", "plot_taxanomy")
+plot_taxanomy = plotting.load_data("plot_taxanomy.csv")
+
+# Create output dir
+output_dir = utils.create_output_dir("plot/output")
+
+# Clean up folder
+utils.remove_files_in_dir("plot/output")
 
 # Iterate over different plots and save them as png
-for idx, row in plot_taxanomy[0:10].iterrows():
-    # try:
-    print(f"Iteration number: {idx+1}")
+for idx, row in plot_taxanomy.iterrows():
+    try:
+        print(f"Iteration number: {idx+1}")
 
-    # Load data from plot taxanomy
-    visual_cue_params = row["visual_cue_params"]
-    variation_name = row["variation_name"]
-    plot_name = (
-        variation_name.replace("Simple ", "")
-        .replace("Grouped ", "")
-        .replace("Single Facetted ", "")
-        .replace("Dual Facetted ", "")
-    )  # to-do: fix this line
-    plot_package = row["plot_package"]
-    facetted = row["facetted"]
-    grouped = row["grouped"]
+        # Load data from plot taxanomy
+        visual_cue_params = json.loads(row["visual_cue_params"])
+        plot_name = row["parent_name"]
+        variation_name = row["variation_name"]
+        plot_package = row["plot_package"]
+        facetted = row["facetted"]
+        single_facetted = row["single_facetted"]
+        dual_facetted = row["dual_facetted"]
+        grouped = row["grouped"]
+        add_plot_args = json.loads(row["add_plot_args"])
+        print(add_plot_args)
+        add_gmap_args = json.loads(row["add_gmap_args"])
+        print(add_gmap_args)
 
-    visual_cue_params = json.loads(visual_cue_params)
-    vars_picked = plotting.pick_vars(
-        visual_cue_params=visual_cue_params, vars_selection=vars_selection
-    )
-    output_dir = utils.create_output_dir("output")
-    file_path = output_dir / variation_name
+        # Dictionary manipulation
+        vars_picked = plotting.pick_vars(visual_cue_params, vars_selection, cues, plot_name)
+        print(vars_picked)
+        visual_cue_col_mapping = plotting.map_cols_for_visual_cues(cues, vars_picked)
+        unique_values = plotting.calc_unique_values(example_df, vars_picked)
+        basic_plot_func = plot_func_mapping.get(plot_name)
 
-    # Create plot commands
-    plot_commands = plotting.construct_plot_command(
-        data=example_df,
-        plot_name=plot_name,
-        variation_name=variation_name,
-        plot_func_mapping=plot_func_mapping,
-        plot_package=plot_package,
-        vars_picked=vars_picked,
-        file_path=file_path,
-        facetted=facetted,
-        grouped=grouped,
-    )
+        # Filepath management
+        file_name = str(idx + 1) + "_" + variation_name
+        file_path = output_dir / file_name
 
-    df = example_df.copy()  # df as param referenced in plot commands
-    for command in plot_commands:
-        try:
-            exec(command)
-        except Exception as e:
-            print("Exception occured")
-            print(e)
-        finally:
-            print(command)
-    print()
+        # Create plot commands
+        plot_commands = plotting.construct_plot_command(
+            data=example_df,
+            plot_name=plot_name,
+            variation_name=variation_name,
+            basic_plot_func=basic_plot_func,
+            plot_package=plot_package,
+            file_path=file_path,
+            unique_values=unique_values,
+            plots_per_row=3,
+            x=visual_cue_col_mapping["x"],
+            y=visual_cue_col_mapping["y"],
+            hue=visual_cue_col_mapping["hue"],
+            size=visual_cue_col_mapping["size"],
+            row=visual_cue_col_mapping["row"],
+            col=visual_cue_col_mapping["col"],
+            facetted=facetted,
+            single_facetted=single_facetted,
+            dual_facetted=dual_facetted,
+            grouped=grouped,
+            add_plot_args=add_plot_args,
+            add_gmap_args=add_gmap_args
+        )
 
-    # except Exception as e:
-    #     print(f"An exception occured | {e}")
+        print(plot_commands)
+
+        df = example_df.copy()  # df as param referenced in plot commands
+        for command in plot_commands:
+            try:
+                exec(command)
+            except Exception as e:
+                print("Exception occured")
+                print(e)
+
+    except Exception as e:
+        print(f"An exception occured | {e}")
+
+    finally:
+        print()
