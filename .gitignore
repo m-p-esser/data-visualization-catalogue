@@ -510,8 +510,14 @@ Blog
 About
 
 # Project specific
-plot/output/
 references/
+django_cli_commands.md
+to_do.md
+svg/
+other/
+*.ai
+jupyter_notebooks/
+
 
 # Virtual documents
 .virtual_documents
