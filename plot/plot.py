@@ -4,15 +4,15 @@ import pathlib
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-from plot import utils
+from plot import plot_utils
 
 
 def load_data(file_name, sep=";"):
     """ Load data from file to dataframe """
-    if pathlib.Path.cwd().parts[-1] == "jupyter_notebooks":
-        file_path = [fp for fp in pathlib.Path.cwd().parent.rglob(f'*{file_name}')][0]
+    if plot_utils.is_running_from_ipython():
+        file_path = [fp for fp in pathlib.Path.cwd().parent.parent.rglob(f'*{file_name}')][0]
     else:
-        file_path = [fp for fp in pathlib.Path.cwd().rglob(f'*{file_name}')][0]
+        file_path = [fp for fp in pathlib.Path.cwd().parent.rglob(f'*{file_name}')][0]
     df = pd.read_csv(file_path, sep=sep)
 
     return df
@@ -166,7 +166,7 @@ def construct_plot_command(
 
         else:
             c1 = "{}(x=df[{}], y=df[{}])".format(
-                basic_plot_func, utils.replace_str(x), utils.replace_str(y)
+                basic_plot_func, plot_utils.replace_str(x), plot_utils.replace_str(y)
             )
             plot_commands.extend([c1])
 
@@ -180,7 +180,7 @@ def construct_plot_command(
 
         else:
             c1 = "{}(x=df[{}], y=df[{}])".format(
-                basic_plot_func, utils.replace_str(x), utils.replace_str(y)
+                basic_plot_func, plot_utils.replace_str.replace_str(x), plot_utils.replace_str.replace_str(y)
             )
             plot_commands.extend([c1])
 
@@ -194,4 +194,3 @@ def construct_plot_command(
 def plot_commands_to_markdown():
     """ Plot Commands need to be transformed to a format which can be implemented in Website, e.g. Markdown """
     pass
-
