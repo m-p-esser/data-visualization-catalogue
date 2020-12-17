@@ -15,9 +15,9 @@
         <div class="card mb-2">
             <div class="card-body text-center">
                 <a href="{% url 'plot_detail' plot.pk %}">
-                    <img class="img-fluid" src="{% static plot.image %}" width="50">
+                    <img class="img-fluid" src="{% static plot.icon %}" width="50">
                 </a>
-                <h6 class="card-title">{{ plot.name }}</h5>
+                <h6 class="card-title">{{ plot.variation_name }}</h5>
                     <!-- <a href="{% url 'plot_detail' plot.pk %}" class="btn btn-primary">Read More</a> -->
             </div>
         </div>
