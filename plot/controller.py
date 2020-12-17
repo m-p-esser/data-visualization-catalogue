@@ -3,7 +3,8 @@
 import json
 import seaborn as sns
 import matplotlib.pyplot as plt
-from plot import plotting, utils
+import utils
+from plot import plot, plot_utils
 
 plot_func_mapping = {
     # "Area Chart": "plt.stackplot",
@@ -29,18 +30,18 @@ vars_selection = {
 cues = ["x", "y", "hue", "size", "row", "col"]
 
 # Settings
-plotting.seaborn_settings()
+plot.seaborn_settings()
 
 # Load data into memory
-example_df = plotting.load_data("6_adult.csv", sep=",")
-example_df = plotting.filter_data(example_df, vars_selection)
-plot_taxanomy = plotting.load_data("plot_taxanomy.csv")
+example_df = plot.load_data("6_adult.csv", sep=",")
+example_df = plot.filter_data(example_df, vars_selection)
+plot_taxanomy = plot.load_data("plot_taxanomy.csv")
 
 # Create output dir
-output_dir = utils.create_output_dir("plot/output")
+output_dir = utils.create_output_dir("dataviz_gallery/static/img/seaborn")
 
 # Clean up folder
-utils.remove_files_in_dir("plot/output")
+utils.remove_files_in_dir("dataviz_gallery/static/img/seaborn")
 
 # Iterate over different plots and save them as png
 for idx, row in plot_taxanomy.iterrows():
@@ -62,10 +63,10 @@ for idx, row in plot_taxanomy.iterrows():
         print(add_gmap_args)
 
         # Dictionary manipulation
-        vars_picked = plotting.pick_vars(visual_cue_params, vars_selection, cues, plot_name)
+        vars_picked = plot.pick_vars(visual_cue_params, vars_selection, cues, plot_name)
         print(vars_picked)
-        visual_cue_col_mapping = plotting.map_cols_for_visual_cues(cues, vars_picked)
-        unique_values = plotting.calc_unique_values(example_df, vars_picked)
+        visual_cue_col_mapping = plot.map_cols_for_visual_cues(cues, vars_picked)
+        unique_values = plot.calc_unique_values(example_df, vars_picked)
         basic_plot_func = plot_func_mapping.get(plot_name)
 
         # Filepath management
@@ -73,7 +74,7 @@ for idx, row in plot_taxanomy.iterrows():
         file_path = output_dir / file_name
 
         # Create plot commands
-        plot_commands = plotting.construct_plot_command(
+        plot_commands = plot.construct_plot_command(
             data=example_df,
             plot_name=plot_name,
             variation_name=variation_name,
