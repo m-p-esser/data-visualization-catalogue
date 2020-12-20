@@ -5,7 +5,7 @@ from dataviz_gallery import crud
 
 parser = argparse.ArgumentParser(
     prog='bulk_create',
-    description='Load data from csv into database table')
+    description='Load data from flat file into database table')
 
 parser.add_argument(
     '-p',
@@ -13,7 +13,7 @@ parser.add_argument(
     metavar='Relative Path',
     type=str,
     required=True,
-    help='the path to the csv which should be used to populate the database table',
+    help='the path to the flat file which should be used to populate the database table',
     action='store',  # stores value to Namespace object
     nargs=1  # expects n (here 1) value for the argument
 )
@@ -26,6 +26,6 @@ if isinstance(args.path, list):
 else:
     path = args.path
 
-df = crud.csv_to_df(path)
+df = crud.xlsx_to_df(path)
 query_list = crud.df_to_query_list(df)
 crud.bulk_create(query_list)
