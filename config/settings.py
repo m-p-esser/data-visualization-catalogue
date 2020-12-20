@@ -55,7 +55,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["dataviz_gallery/templates/"],
+        'DIRS': ["dataviz_gallery/templates/", "plot/scripts/"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
