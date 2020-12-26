@@ -26,9 +26,9 @@ def xlsx_to_df(relative_path: str):
     return df
 
 
-def str_entry_to_json_entry(relative_path_in: str, relative_path_out: str, cols: list):
+def str_to_json_entry(rel_path_in: str, rel_path_out: str, cols: list):
     """ Convert string entry in pandas series in json entry and output to new flat file"""
-    df = xlsx_to_df(relative_path=relative_path_in)
+    df = xlsx_to_df(relative_path=rel_path_in)
 
     # Iterate over different columns
     for col in cols:
@@ -65,7 +65,7 @@ def str_entry_to_json_entry(relative_path_in: str, relative_path_out: str, cols:
 
             df.loc[:, col].at[index] = dict_entry
 
-    file_path_out = pathlib.Path.cwd() / relative_path_out
+    file_path_out = pathlib.Path.cwd() / rel_path_out
     df.to_excel(file_path_out)
 
 
@@ -113,9 +113,9 @@ def bulk_create(query_list):
     print("Added entries to database table")
 
 
-if __name__ == "__main__":
-    str_entry_to_json_entry(
-        relative_path_in="data/plot_taxanomy/plot_taxanomy.xlsx",
-        relative_path_out="data/plot_taxanomy/plot_taxanomy_out.xlsx",
-        cols=["goals", "visual_cues", "coordinate_system", "shapes", "related"],
-    )
+def query_goals():
+    """ Load unique goals from database and create tuple of tuples (for choices in forms.py)"""
+    p = models.Plot.objects.all()
+    goals = list(p.first().goals.keys())
+    goals = [(g[0:3].upper(), g) for g in goals]
+    return tuple(goals)
