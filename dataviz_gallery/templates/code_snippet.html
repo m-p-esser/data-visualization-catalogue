@@ -1,0 +1,8 @@
+{% load markdownify %}
+
+<div>
+    {% autoescape off %}
+    {% code_block_from_markdown plot.code %}
+    {% endautoescape %}
+</div>
+
