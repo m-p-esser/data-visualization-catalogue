@@ -6,69 +6,100 @@
 
 {% include "nav.html" %}
 
-<div class="container-fluid p-5 border">
-    <h3 class="text-muted">{{ plot.variation_name }}</h3>
+<div class="container-fluid p-5 border bg-light">
+
+    <!-- Header -->
+    <div>
+        <h3 class="text-muted">{{ plot.variation_name }}</h3>
+    </div>
+
     <div class="row">
-        <div class="col-md-6 pt-3">
+
+        <!-- Collapsable Plot infos (Plot, Code, Data) -->
+        <div class="col-lg-7 pb-5">
+
             <!-- Nav tabs -->
-            <ul class="nav nav-pills">
+            <ul class="nav nav-tabs">
                 <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#plot">Plot</a>
+                    <a class="nav-link active" data-toggle="tab" href="#plot">Plot</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#code">Code</a>
+                    <a class="nav-link" data-toggle="tab" href="#code">Code</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#data">Data</a>
+                    <a class="nav-link" data-toggle="tab" href="#transformedData">Data (Sample)</a>
                 </li>
             </ul>
+
             <!-- Tab panes -->
-            <div class="tab-content pt-3">
+            <div class="tab-content pt-5 mr-5">
                 <div class="tab-pane container active" id="plot">
-                    <img class="img-fluid" src="{% static plot.seaborn %}">
+                    {% with "plotly/"|add:plot.variation_name|add:" - Plot"|add:".html" as plotly_plot %}
+                    {% include plotly_plot %}
+                    {% endwith %}
                 </div>
                 <div class="tab-pane container fade" id="code">
                     {% include "code_snippet.html" %}
                 </div>
-                <div class="tab-pane container fade" id="data">...</div>
+                <div class="tab-pane container fade" id="transformedData">
+                    {% with "plotly/"|add:plot.variation_name|add:" - Transformed Table"|add:".html" as plotly_transformed_table %}
+                    {% include plotly_transformed_table %}
+                    {% endwith %}
+                </div>
             </div>
-
         </div>
-        <div class="col-md-4 pt-3 ml-5">
+
+        <!-- Plot infos (Goals, Dimensionality, Variales) -->
+        <div class="col-lg-3">
             <div>
-                <h5 class="text-muted">Goals</h5 >
+                <h5 class="text-muted">Goals</h5>
                 {% for key, value in plot.goals.items %}
-                    {% if value == True %}
-                        <span class="badge badge-pill badge-dark">{{ key }}</span>
-                    {% endif %}
+                {% if value == True %}
+                <a href="{% url 'plot_goal' goal=key %}" class="badge badge-pill badge-dark">{{ key }}</a>
+                {% endif %}
                 {% endfor %}
             </div>
             <div>
-                <h5 class="text-muted pt-3">Dimensionality</h5 >
+                <h5 class="text-muted pt-4">Dimensionality</h5>
                 <p>{{ plot.dimensionality }}</p>
             </div>
             <div>
                 <h5 class="text-muted pt-2">Variables</h5>
                 <ul>
                     {% if plot.numerical == 'N' %}
-                        <li>{{ plot.numerical }} Numeric</li>
+                    <li>{{ plot.numerical }} Numeric</li>
                     {% else %}
-                        {% if plot.numerical|add:"0" > 0 %}
-                            <li>{{ plot.numerical }} Numeric</li>
-                        {% endif %}
+                    {% if plot.numerical|add:"0" > 0 %}
+                    <li>{{ plot.numerical }} Numerical</li>
+                    {% endif %}
                     {% endif %}
                     {% if plot.categorical|add:"0" > 0 %}
-                        <li>{{ plot.categorical }} Categoric</li>
+                    <li>{{ plot.categorical }} Categorical</li>
                     {% endif %}
                 </ul>
             </div>
+            <div>
+                <h5 class="text-muted pt-2">Shapes</h5>
+                {% for key, value in plot.shapes.items %}
+                    {% if value == True %}
+                        {% with "img/shape/"|add:key|add:".png" as shape_path %}
+                        <a href="{% url 'plot_shape' shape=key %}"><img class="img-fluid pb-3" src="{% static shape_path %}" width="32"></a>
+                        {% endwith %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <h5 class="text-muted pt-2">Description</h5>
+            <p class="text-dark">{{ plot.description }}</h5>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 pr-1">
-            <p class="text-muted">{{ plot.description }}</h5>
+
+        <!-- Related Plots -->
+        <div class="col-lg-3">
+            <h5 class="text-muted">Related Plots</h5>
         </div>
+
     </div>
+</div>
+
 </div>
 
 {% endblock %}

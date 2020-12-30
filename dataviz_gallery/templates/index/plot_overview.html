@@ -7,38 +7,43 @@
 
 {% include "nav.html" %}
 
+
 <div class="container-fluid">
 
+    <!-- Filter Menu which can be collapsed -->
     <div class="container m-3 pl-5 p-3">
         {% crispy form %}
     </div>
 
+    <!-- Plot Cards -->
     <div class="container m-3 pl-5">
         <div class="row">
             {% for plot in plots %}
-            <div class="col-md-3 pb-5">
+            <div class="col-md-4 pb-5">
                 <div class="card-block ml-2 mr-2 bg-light shadow">
 
-                    <div class="card-header">
-                        <h6 class="card-title text-center ml-2 mr-2 pt-2">{{ plot.variation_name }}</h6>
-                    </div>
-
                     <div class="card-body text-center">
-                        <a href="{% url 'plot_detail' plot.pk %}">
-                            <img class="img-fluid" src="{% static plot.icon %}" width="128">
-                        </a>
-                    </div>
 
-                    <div class="card-footer">
-                        {% if plot.facetted == True %}
-                        <span class="badge badge-pill badge-dark">Facetted</span>
-                        {% endif %}
-                        {% if plot.grouped == True %}
-                        <span class="badge badge-pill badge-dark">Grouped</span>
-                        {% endif %}
-                        {% if plot.facetted == False and plot.grouped == False %}
-                        <span class="badge badge-pill badge-dark">Basic</span>
-                        {% endif %}
+                        <!-- Title -->
+                        <h6 class="card-title text-center ml-2 mr-2 pt-2">{{ plot.variation_name }}</h6>
+
+                        <!-- Image -->
+                        <a href="{% url 'plot_detail' plot.pk %}">
+                            <img class="img-fluid pb-3" src="{% static plot.icon %}" width="128">
+                        </a>
+
+                        <!-- Badges -->
+                        <div>
+                            {% if plot.facetted == True %}
+                            <span class="badge badge-pill badge-dark">Facetted</span>
+                            {% endif %}
+                            {% if plot.grouped == True %}
+                            <span class="badge badge-pill badge-dark">Grouped</span>
+                            {% endif %}
+                            {% if plot.facetted == False and plot.grouped == False %}
+                            <span class="badge badge-pill badge-dark">Basic</span>
+                            {% endif %}
+                        </div>
                     </div>
 
                 </div>

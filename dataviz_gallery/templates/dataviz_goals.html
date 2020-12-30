@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block dataviz_goals %}
+
+{% include "nav.html" %}
+
+<div class="container-fluid">
+
+  <!-- Plot Cards -->
+  <div class="container m-3 pl-5 pt-5">
+    <div class="row pb-5">
+      <h3 class="text-muted">Data Visualization Goals</h3>
+    </div>
+
+    <!-- First Row -->
+    <div class="row pb-5">
+      <div class="card-deck">
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/comparison.png" as comparison %}
+          <img class="card-img-top" src="{% static comparison %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Comparison</h5>
+            <p class="card-text">Visualisation methods that help show the differences or similarities between values</p>
+          </div>
+          {% endwith %}
+        </div>
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/data_over_time.png" as data_over_time %}
+          <img class="card-img-top" src="{% static data_over_time %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Data Over Time</h5>
+            <p class="card-text">Visualization methods that show data over a time period to display as a way to find
+              trends or changes over time</p>
+          </div>
+          {% endwith %}
+        </div>
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/distribution.png" as distribution %}
+          <img class="card-img-top" src="{% static distribution %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Distribution</h5>
+            <p class="card-text">Visualization methods that display frequency, how data spread out over an interval or
+              is grouped</p>
+          </div>
+          {% endwith %}
+        </div>
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/flow.png" as flow %}
+          <img class="card-img-top" src="{% static flow %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Flow</h5>
+            <p class="card-text">Visualization methods that are useful for showing movement data or the flow of data</p>
+          </div>
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Row -->
+    <div class="row pb-5">
+      <div class="card-deck">
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/hierachy.png" as hierachy %}
+          <img class="card-img-top" src="{% static hierachy %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Hierachy</h5>
+            <p class="card-text">Visualization methods that show how data or objects are ranked and ordered together in
+              an organisation or system.</p>
+          </div>
+          {% endwith %}
+        </div>
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/location.png" as location %}
+          <img class="card-img-top" src="{% static location %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Location</h5>
+            <p class="card-text">Visualization methods that show data over geographical regions.</p>
+          </div>
+          {% endwith %}
+        </div>
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/part_to_a_whole.png" as part_to_a_whole %}
+          <img class="card-img-top" src="{% static part_to_a_whole %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Part to a Whole</h5>
+            <p class="card-text">Visualisation methods that show part (or parts) of a variable to it's total. Often used
+              to show how something is divided up.</p>
+          </div>
+          {% endwith %}
+        </div>
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/proportions.png" as proportions %}
+          <img class="card-img-top" src="{% static proportions %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Proportions</h5>
+            <p class="card-text">Visualization methods that use size or area to show differences or similarities between
+              values or for parts to a whole.</p>
+          </div>
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Third Row -->
+    <div class="row pb-5">
+      <div class="card-deck">
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/range.png" as range %}
+          <img class="card-img-top" src="{% static range %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Range</h5>
+            <p class="card-text">Visualization methods that display the variations between upper and lower limits on a
+              scale</p>
+          </div>
+          {% endwith %}
+        </div>
+        <div class="card ml-2 mr-2 bg-light shadow">
+          {% with "img/goals/relationship.png" as relationship %}
+          <img class="card-img-top" src="{% static relationship %}" width="128">
+          <div class="card-body">
+            <h5 class="card-title">Relationship</h5>
+            <p class="card-text">Visualization methods that show relationships and connections between the data or show
+              correlations between two or more variables</p>
+          </div>
+          {% endwith %}
+        </div>
+        <div class="card ml-2 mr-2 border-0"></div>
+        <div class="card ml-2 mr-2 border-0"></div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
