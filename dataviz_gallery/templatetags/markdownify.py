@@ -22,7 +22,7 @@ class HighlightRenderer(mistune.Renderer):
 @register.simple_tag
 def code_block_from_markdown(file_name):
     """ Return code block originally formatted in markdown as html """
-    markdown_filepath = pathlib.Path.cwd() / "plot" / "scripts" / file_name
+    markdown_filepath = pathlib.Path.cwd() / "plot" / "scripts" / "plotly" / file_name
     with open(markdown_filepath, "r") as md_file:
         markdown_text = md_file.read()
 
