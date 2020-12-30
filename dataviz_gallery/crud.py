@@ -101,10 +101,13 @@ def bulk_create(query_list):
             icon="img/icon/"
             + str(entry["parent_name"]).lower().replace(" ", "_")
             + ".png",
-            seaborn="img/seaborn/"
+            seaborn_plot="img/seaborn/"
             + str(entry["variation_name"]).lower().replace(" ", "_")
             + ".png",
-            code=entry["variation_name"].lower().replace(" ", "_") + ".md",
+            plotly_plot="img/plotly/"
+            + str(entry["variation_name"]).lower().replace(" ", "_")
+            + ".png",
+            plotly_code=entry["variation_name"].lower().replace(" ", "_") + ".md",
         )
         for entry in query_list
     ]
