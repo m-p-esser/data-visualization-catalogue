@@ -521,3 +521,6 @@ jupyter_notebooks/
 
 # Virtual documents
 .virtual_documents
+
+# Database
+db.sqlite3
