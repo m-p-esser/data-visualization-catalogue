@@ -1,1 +1,1 @@
-web: gunicorn dataviz_gallery.wsgi --log-file -
+web: gunicorn config.wsgi --log-file -
