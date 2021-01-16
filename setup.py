@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='Dataviz with Seaborn',
+    name='Dataviz Catalogue',
     version='1.0.0',
     url='https://github.com/m-p-esser/dataviz-with-seaborn',
     author='Marc-Philipp Esser',
