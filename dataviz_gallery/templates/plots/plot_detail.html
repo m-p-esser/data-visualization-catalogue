@@ -34,17 +34,13 @@
             <!-- Tab panes -->
             <div class="tab-content pt-5 mr-5">
                 <div class="tab-pane container active" id="plot">
-                    {% with "plotly/"|add:plot.variation_name|add:" - Plot"|add:".html" as plotly_plot %}
-                    {% include plotly_plot %}
-                    {% endwith %}
+                    Test
                 </div>
                 <div class="tab-pane container fade" id="code">
                     {% include "code_snippet.html" %}
                 </div>
                 <div class="tab-pane container fade" id="transformedData">
-                    {% with "plotly/"|add:plot.variation_name|add:" - Transformed Table"|add:".html" as plotly_transformed_table %}
-                    {% include plotly_transformed_table %}
-                    {% endwith %}
+                    Test
                 </div>
             </div>
         </div>
