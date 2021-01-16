@@ -106,7 +106,7 @@ class PlotFilterForm(forms.Form):
                             InlineCheckboxes("shapes"), css_class="form-group col-md-10 pb-3 mb-0"
                         ),
                         FormActions(
-                            Submit("submit", "Apply filter", css_class="btn btn-info"), Reset("reset", "Reset filter")
+                            Submit("submit", "Apply filter", css_class="btn btn-info")
                         ),
                     ), css_class="text-secondary"
                 )
