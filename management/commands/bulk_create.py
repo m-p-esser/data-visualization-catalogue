@@ -8,8 +8,8 @@ parser = argparse.ArgumentParser(
     description='Load data from flat file into database table')
 
 parser.add_argument(
-    '-p',
-    '--path',  # this get's added as Namespace (without --)
+    '-rp',
+    '--relative_path',  # this get's added as Namespace (without --)
     metavar='Relative Path',
     type=str,
     required=True,
@@ -21,11 +21,11 @@ parser.add_argument(
 # Execute the parse_args() method
 args = parser.parse_args()
 
-if isinstance(args.path, list):
-    path = args.path[0]
+if isinstance(args.relative_path, list):
+    relative_path = args.relative_path[0]
 else:
-    path = args.path
+    relative_path = args.relative_path
 
-df = crud.xlsx_to_df(path)
+df = crud.xlsx_to_df(relative_path)
 query_list = crud.df_to_query_list(df)
 crud.bulk_create(query_list)
