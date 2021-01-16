@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load markdownify %}
 
 {% block plot_detail %}
 
@@ -39,10 +40,14 @@
                     {% endwith %}
                 </div>
                 <div class="tab-pane container fade" id="code">
-                    Test
+                    {% autoescape off %}
+                    {% code_block_from_markdown plot.plotly_code %}
+                    {% endautoescape %}
                 </div>
                 <div class="tab-pane container fade" id="transformedData">
-                    Test
+                    {% with "plotly/"|add:plot.variation_name|add:" - Transformed Table"|add:".html" as plotly_transformed_table %}
+                    {% include plotly_transformed_table %}
+                    {% endwith %}
                 </div>
             </div>
         </div>
