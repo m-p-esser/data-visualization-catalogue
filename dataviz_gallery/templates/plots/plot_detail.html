@@ -34,7 +34,9 @@
             <!-- Tab panes -->
             <div class="tab-content pt-5 mr-5">
                 <div class="tab-pane container active" id="plot">
-                    Test
+                    {% with "plotly/"|add:plot.variation_name|add:" - Plot"|add:".html" as plotly_plot %}
+                    {% include plotly_plot %}
+                    {% endwith %}
                 </div>
                 <div class="tab-pane container fade" id="code">
                     Test
